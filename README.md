@@ -63,3 +63,20 @@ I like figuring out how things work underneath — code, networks, the systems t
 `FXRL01 // SYSTEM ONLINE`
 
 </div>
+<!-- FXRL01 Electric Core -->
+
+<div align="center">
+
+<img src="https://raw.githubusercontent.com/fxrl01/fxrl01/main/fxrl01-electric-core.gif" width="100%" alt="FXRL01 Electric Core" />
+
+<br><br>
+
+<a href="https://fxrl01.github.io/">
+  <img src="https://img.shields.io/badge/OPEN%20INTERACTIVE%20CORE-00E5FF?style=for-the-badge&labelColor=050A10&logo=githubpages&logoColor=00E5FF" alt="Open Interactive Core" />
+</a>
+
+<br><br>
+
+<sub>SOFTWARE · CYBERSECURITY · SYSTEMS · IoT / ROBOTICS</sub>
+
+</div>
