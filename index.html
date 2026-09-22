@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FXRL01 // Electric Core</title>
+<style>
+  :root{
+    --bg:#03080d;
+    --cyan:#00e5ff;
+    --cyan2:#55f3ff;
+    --soft:#8befff;
+    --text:#d8faff;
+    --muted:#6e9098;
+    --line:rgba(0,229,255,.18);
+  }
+
+  *{box-sizing:border-box}
+
+  html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+
+  body{
+    position:fixed;
+    inset:0;
+  }
+
+  #canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+    cursor:none;
+  }
+
+  .hud{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:28px 32px;
+  }
+
+  .top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:30px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+
+  .brand{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+  }
+
+  .brand strong{
+    font:700 clamp(18px,2vw,27px)/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:#ecfeff;
+    letter-spacing:.18em;
+  }
+
+  .brand span{
+    font:500 10px/1.2 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:var(--muted);
+  }
+
+  .status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font:600 10px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:var(--soft);
+  }
+
+  .status i{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--cyan);
+    box-shadow:0 0 13px var(--cyan);
+    animation:blink 1.4s infinite ease-in-out;
+  }
+
+  @keyframes blink{50%{opacity:.25}}
+
+  .center{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:min(78vw,560px);
+    text-align:center;
+  }
+
+  .core-label{
+    font:700 clamp(28px,5vw,66px)/.95 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    letter-spacing:.16em;
+    text-shadow:0 0 18px rgba(0,229,255,.38);
+  }
+
+  .core-sub{
+    margin-top:15px;
+    font:500 10px/1.4 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    letter-spacing:.32em;
+    color:var(--muted);
+  }
+
+  .focus{
+    margin-top:24px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  .chip{
+    border:1px solid rgba(0,229,255,.22);
+    background:rgba(3,8,13,.32);
+    backdrop-filter:blur(8px);
+    padding:7px 10px;
+    border-radius:999px;
+    font:600 9px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:#a9dfe6;
+    letter-spacing:.12em;
+  }
+
+  .bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:30px;
+  }
+
+  .hint{
+    max-width:330px;
+    font:500 10px/1.6 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:var(--muted);
+    letter-spacing:.05em;
+  }
+
+  .hint b{color:var(--soft)}
+
+  .coords{
+    text-align:right;
+    font:500 9px/1.6 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:#4e7179;
+    letter-spacing:.08em;
+  }
+
+  .scan{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+      linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px) 0 0/100% 4px,
+      radial-gradient(circle at 50% 50%, transparent 0 18%, rgba(0,229,255,.018) 18.2% 18.5%, transparent 19%);
+    mix-blend-mode:screen;
+    opacity:.32;
+  }
+
+  .vignette{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:radial-gradient(circle at center,transparent 28%,rgba(0,0,0,.16) 58%,rgba(0,0,0,.72) 100%);
+  }
+
+  @media (max-width:700px){
+    .hud{padding:20px 18px}
+    .top{align-items:flex-start}
+    .status{margin-top:2px}
+    .core-sub{letter-spacing:.18em}
+    .hint{max-width:220px}
+    .coords{display:none}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .status i{animation:none}
+  }
+</style>
+</head>
+<body>
+<canvas id="canvas" aria-label="FXRL01 interactive electric core"></canvas>
+
+<div class="scan"></div>
+<div class="vignette"></div>
+
+<div class="hud">
+  <div class="top">
+    <div class="brand">
+      <strong>FXRL01</strong>
+      <span>systems // cyber // software // robotics</span>
+    </div>
+    <div class="status"><i></i> CORE ONLINE</div>
+  </div>
+
+  <div class="center">
+    <div class="core-label">ELECTRIC CORE</div>
+    <div class="core-sub">BUILD · LEARN · SECURE · EVOLVE</div>
+    <div class="focus">
+      <div class="chip">SOFTWARE</div>
+      <div class="chip">CYBERSECURITY</div>
+      <div class="chip">SYSTEMS</div>
+      <div class="chip">IoT / ROBOTICS</div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="hint">
+      <b>INTERACTION //</b><br>
+      Move through the field. The core follows your presence and the network responds.
+    </div>
+    <div class="coords" id="coords">X: ---- &nbsp; Y: ----<br>FIELD: STANDBY</div>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d", { alpha: true });
+
+  let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let cx = 0, cy = 0;
+  let frame = 0;
+
+  const pointer = { x: 0, y: 0, active: false, lastX: 0, lastY: 0, speed: 0 };
+  const target = { x: 0, y: 0 };
+
+  const TAU = Math.PI * 2;
+  const TWO = Math.PI * 0.5;
+
+  const filaments = [];
+  const particles = [];
+  const pulses = [];
+
+  // Original take on the "tentacle/segment" idea:
+  // radial filaments are anchored to a breathing core but bend toward
+  // a moving energy source (mouse or autonomous orbit).
+  class Filament {
+    constructor(i, total) {
+      this.i = i;
+      this.total = total;
+      this.baseAngle = (i / total) * TAU + (Math.random() - .5) * .11;
+      this.length = 110 + Math.random() * Math.min(w, h) * .24;
+      this.segments = 18 + Math.floor(Math.random() * 15);
+      this.width = .45 + Math.random() * 1.35;
+      this.phase = Math.random() * TAU;
+      this.speed = .002 + Math.random() * .006;
+      this.bend = 0.55 + Math.random() * 1.1;
+      this.energy = Math.random();
+      this.points = Array.from({length:this.segments+1}, () => ({x:0,y:0}));
+    }
+
+    update(time) {
+      const breathing = 1 + Math.sin(time * .0016 + this.phase) * .045;
+      const baseR = 46 * breathing;
+
+      let anchorX = cx + Math.cos(this.baseAngle) * baseR;
+      let anchorY = cy + Math.sin(this.baseAngle) * baseR;
+
+      // Cursor influence becomes stronger nearby.
+      const dx = pointer.x - anchorX;
+      const dy = pointer.y - anchorY;
+      const dist = Math.hypot(dx,dy);
+      const influence = pointer.active
+        ? Math.max(0, 1 - dist / Math.max(170, Math.min(w,h)*.33))
+        : 0;
+
+      const aim = Math.atan2(dy, dx);
+      const offset = Math.sin(time * this.speed + this.phase) * 0.16
+                   + influence * Math.sin(time*.007 + this.phase) * 0.26;
+
+      for(let j=0;j<=this.segments;j++){
+        const p = j / this.segments;
+        const rr = p * this.length;
+        const wave = Math.sin(p * 7 + this.phase + time*.0022) * (7 + 18*p) * this.bend;
+        const wave2 = Math.cos(p * 11 - this.phase + time*.0014) * 4 * p;
+
+        let ang = this.baseAngle + offset + Math.sin(p*2.4 + this.phase)*0.12;
+
+        // Curve toward the active energy source.
+        ang += Math.sin(aim - ang) * influence * (0.30 + p*.45);
+
+        let x = anchorX + Math.cos(ang) * rr;
+        let y = anchorY + Math.sin(ang) * rr;
+
+        // Perpendicular organic displacement.
+        x += Math.cos(ang + Math.PI/2) * (wave + wave2) * p;
+        y += Math.sin(ang + Math.PI/2) * (wave + wave2) * p;
+
+        // Near the cursor, create a subtle repulsion sheath.
+        if(pointer.active && dist < 260) {
+          const pdx = x - pointer.x;
+          const pdy = y - pointer.y;
+          const pd = Math.hypot(pdx,pdy) || 1;
+          const push = Math.max(0, 1 - pd/260) * 16 * (0.4 + p);
+          x += pdx/pd * push;
+          y += pdy/pd * push;
+        }
+
+        this.points[j].x = x;
+        this.points[j].y = y;
+      }
+    }
+
+    draw(time) {
+      const pulseChance = 0.0018 + this.energy * .0012;
+      if(Math.random() < pulseChance) {
+        pulses.push(new Pulse(this));
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(this.points[0].x, this.points[0].y);
+
+      for(let j=1;j<this.points.length-1;j++){
+        const p1=this.points[j], p2=this.points[j+1];
+        const mx=(p1.x+p2.x)/2;
+        const my=(p1.y+p2.y)/2;
+        ctx.quadraticCurveTo(p1.x,p1.y,mx,my);
+      }
+
+      const hue = 185 + this.energy*30;
+      const alpha = .08 + this.energy*.16;
+      ctx.strokeStyle = `hsla(${hue},100%,68%,${alpha})`;
+      ctx.lineWidth = this.width;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = `hsla(${hue},100%,60%,${alpha})`;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Fine conductive spine.
+      if(this.energy > .74){
+        ctx.beginPath();
+        for(let j=0;j<this.points.length;j+=3){
+          const p=this.points[j];
+          if(j===0) ctx.moveTo(p.x,p.y);
+          else ctx.lineTo(p.x,p.y);
+        }
+        ctx.strokeStyle = `rgba(150,250,255,${.10 + this.energy*.12})`;
+        ctx.lineWidth = .4;
+        ctx.stroke();
+      }
+    }
+  }
+
+  class Pulse {
+    constructor(filament) {
+      this.f = filament;
+      this.t = 0;
+      this.speed = .015 + Math.random()*.012;
+      this.life = 1;
+      this.offset = Math.floor(Math.random() * (filament.points.length-1));
+    }
+
+    update() {
+      this.t += this.speed;
+      this.life -= .012;
+      return this.life > 0 && this.t < 1;
+    }
+
+    draw() {
+      const idx = this.offset + Math.floor(this.t * 7);
+      const a = this.f.points[Math.min(idx, this.f.points.length-1)];
+      if(!a) return;
+      const r = 1.2 + this.life*2.2;
+
+      ctx.beginPath();
+      ctx.arc(a.x,a.y,r,0,TAU);
+      ctx.fillStyle=`rgba(210,255,255,${this.life*.95})`;
+      ctx.shadowBlur=12;
+      ctx.shadowColor="rgba(0,229,255,.95)";
+      ctx.fill();
+      ctx.shadowBlur=0;
+    }
+  }
+
+  function spawnParticle() {
+    const ang = Math.random()*TAU;
+    const rr = 90 + Math.random()*Math.min(w,h)*.46;
+    particles.push({
+      x: cx+Math.cos(ang)*rr,
+      y: cy+Math.sin(ang)*rr,
+      vx: (Math.random()-.5)*.08,
+      vy: (Math.random()-.5)*.08,
+      r: .35+Math.random()*1.2,
+      a: .15+Math.random()*.42,
+      phase: Math.random()*TAU
+    });
+  }
+
+  function resize() {
+    dpr=Math.min(window.devicePixelRatio || 1, 2);
+    w=window.innerWidth;
+    h=window.innerHeight;
+    canvas.width=Math.floor(w*dpr);
+    canvas.height=Math.floor(h*dpr);
+    canvas.style.width=w+"px";
+    canvas.style.height=h+"px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    cx=w/2;
+    cy=h/2;
+    target.x=cx;
+    target.y=cy;
+
+    const count=Math.min(270, Math.max(150, Math.floor((w*h)/7200)));
+    filaments.length=0;
+    for(let i=0;i<count;i++) filaments.push(new Filament(i,count));
+
+    particles.length=0;
+    for(let i=0;i<Math.min(150,Math.max(70,Math.floor((w*h)/9000)));i++) spawnParticle();
+  }
+
+  function updatePointer(x,y) {
+    pointer.lastX=pointer.x;
+    pointer.lastY=pointer.y;
+    pointer.x=x;
+    pointer.y=y;
+    pointer.speed=Math.hypot(pointer.x-pointer.lastX,pointer.y-pointer.lastY);
+    pointer.active=true;
+  }
+
+  canvas.addEventListener("mousemove", e => updatePointer(e.clientX,e.clientY));
+  canvas.addEventListener("mouseenter", e => updatePointer(e.clientX,e.clientY));
+  canvas.addEventListener("mouseleave", () => { pointer.active=false; });
+  canvas.addEventListener("click", () => {
+    // Burst of energy.
+    for(let i=0;i<14;i++){
+      pulses.push({
+        x:pointer.x, y:pointer.y, t:i/14, life:1,
+        update(){
+          this.t += .035;
+          this.life -= .02;
+          return this.life>0;
+        },
+        draw(){
+          const a=this.t;
+          const r=12+a*130;
+          ctx.beginPath();
+          ctx.arc(this.x,this.y,r,0,TAU);
+          ctx.strokeStyle=`rgba(90,245,255,${(1-a)*.16})`;
+          ctx.lineWidth=.7;
+          ctx.stroke();
+        }
+      });
+    }
+  });
+
+  // Touch support.
+  canvas.addEventListener("touchmove", e => {
+    const t=e.touches[0];
+    if(t) updatePointer(t.clientX,t.clientY);
+  }, {passive:true});
+
+  function drawCore(time) {
+    const idleX=cx+Math.cos(time*.00033)*Math.min(w,h)*.06;
+    const idleY=cy+Math.sin(time*.00051)*Math.min(w,h)*.045;
+
+    if(pointer.active){
+      target.x += (pointer.x-target.x)*.065;
+      target.y += (pointer.y-target.y)*.065;
+    } else {
+      target.x += (idleX-target.x)*.015;
+      target.y += (idleY-target.y)*.015;
+    }
+
+    // This is the visual anchor: the "future reactor".
+    const breathe=1+Math.sin(time*.004)*.06;
+    const radius=24*breathe;
+
+    // outer rings
+    for(let i=0;i<4;i++){
+      const r=58+i*17+Math.sin(time*.0015+i)*4;
+      ctx.beginPath();
+      ctx.arc(target.x,target.y,r,0,TAU);
+      ctx.strokeStyle=`rgba(0,229,255,${.045-i*.006})`;
+      ctx.lineWidth=.7;
+      ctx.stroke();
+    }
+
+    const g=ctx.createRadialGradient(target.x,target.y,0,target.x,target.y,120);
+    g.addColorStop(0,"rgba(170,255,255,.95)");
+    g.addColorStop(.08,"rgba(0,229,255,.52)");
+    g.addColorStop(.28,"rgba(0,229,255,.12)");
+    g.addColorStop(1,"rgba(0,229,255,0)");
+    ctx.fillStyle=g;
+    ctx.fillRect(target.x-120,target.y-120,240,240);
+
+    ctx.beginPath();
+    ctx.arc(target.x,target.y,radius,0,TAU);
+    ctx.fillStyle="rgba(221,255,255,.96)";
+    ctx.shadowBlur=32;
+    ctx.shadowColor="rgba(0,229,255,.95)";
+    ctx.fill();
+    ctx.shadowBlur=0;
+
+    ctx.beginPath();
+    ctx.arc(target.x,target.y,8+breathe*2,0,TAU);
+    ctx.fillStyle="white";
+    ctx.fill();
+
+    // energy crosshair
+    const arm=44+Math.sin(time*.003)*4;
+    ctx.strokeStyle="rgba(100,245,255,.55)";
+    ctx.lineWidth=.8;
+    ctx.beginPath();
+    ctx.moveTo(target.x-arm,target.y);
+    ctx.lineTo(target.x-arm+12,target.y);
+    ctx.moveTo(target.x+arm,target.y);
+    ctx.lineTo(target.x+arm-12,target.y);
+    ctx.moveTo(target.x,target.y-arm);
+    ctx.lineTo(target.x,target.y-arm+12);
+    ctx.moveTo(target.x,target.y+arm);
+    ctx.lineTo(target.x,target.y+arm-12);
+    ctx.stroke();
+  }
+
+  function drawParticles(time) {
+    for(const p of particles){
+      p.x += p.vx + Math.sin(time*.0006+p.phase)*.015;
+      p.y += p.vy + Math.cos(time*.0007+p.phase)*.015;
+
+      if(p.x < -20 || p.x > w+20 || p.y < -20 || p.y > h+20){
+        p.x=Math.random()*w;
+        p.y=Math.random()*h;
+      }
+
+      const dx=p.x-target.x, dy=p.y-target.y;
+      const d=Math.hypot(dx,dy);
+      let a=p.a*(.72+.28*Math.sin(time*.002+p.phase));
+
+      if(d<190){
+        a*=1.7;
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,TAU);
+      ctx.fillStyle=`rgba(120,242,255,${a})`;
+      ctx.fill();
+    }
+  }
+
+  function drawFieldGrid() {
+    ctx.save();
+    ctx.strokeStyle="rgba(0,229,255,.024)";
+    ctx.lineWidth=.5;
+
+    const gap=Math.max(42, Math.min(75,w/18));
+    for(let x=0;x<w;x+=gap){
+      ctx.beginPath();
+      ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke();
+    }
+    for(let y=0;y<h;y+=gap){
+      ctx.beginPath();
+      ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
+    }
+
+    // Faint horizontal scan.
+    const scan=(frame*0.55)%h;
+    ctx.strokeStyle="rgba(90,245,255,.028)";
+    ctx.beginPath();
+    ctx.moveTo(0,scan);
+    ctx.lineTo(w,scan);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function render(time) {
+    frame++;
+
+    // Subtle trail rather than a hard clear: gives the field a living afterimage.
+    ctx.fillStyle="rgba(3,8,13,.20)";
+    ctx.fillRect(0,0,w,h);
+
+    drawFieldGrid();
+    drawParticles(time);
+
+    // Sort visually: distant filaments first.
+    for(const f of filaments) f.update(time);
+    for(const f of filaments) f.draw(time);
+
+    drawCore(time);
+
+    for(let i=pulses.length-1;i>=0;i--){
+      if(!pulses[i].update()) pulses.splice(i,1);
+      else pulses[i].draw();
+    }
+
+    const coords=document.getElementById("coords");
+    if(pointer.active){
+      coords.innerHTML=`X: ${Math.round(pointer.x).toString().padStart(4,"0")} &nbsp; Y: ${Math.round(pointer.y).toString().padStart(4,"0")}<br>FIELD: ACTIVE`;
+    }else{
+      coords.innerHTML=`X: ---- &nbsp; Y: ----<br>FIELD: AUTONOMOUS`;
+    }
+
+    requestAnimationFrame(render);
+  }
+
+  resize();
+  window.addEventListener("resize",resize,{passive:true});
+  requestAnimationFrame(render);
+})();
+</script>
+</body>
+</html>
