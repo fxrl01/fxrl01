@@ -35,7 +35,7 @@ Backend · APIs
 
 <td align="center" width="33%">
 
-### `CYBERSECURITY`
+### `CYBER`
 
 Networks · Linux
 
