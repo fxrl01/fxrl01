@@ -471,12 +471,18 @@
     const idleX=cx+Math.cos(time*.00033)*Math.min(w,h)*.06;
     const idleY=cy+Math.sin(time*.00051)*Math.min(w,h)*.045;
 
+    // Frame-rate independent easing (values are the fraction covered per 60fps frame).
+    const dt = Math.min(48, time - (drawCore.last || time)) || 16.667;
+    drawCore.last = time;
+    const ease = f => 1 - Math.pow(1 - f, dt / 16.667);
     if(pointer.active){
-      target.x += (pointer.x-target.x)*.065;
-      target.y += (pointer.y-target.y)*.065;
+      const k = ease(.28);            // was .065 -> much snappier tracking
+      target.x += (pointer.x-target.x)*k;
+      target.y += (pointer.y-target.y)*k;
     } else {
-      target.x += (idleX-target.x)*.015;
-      target.y += (idleY-target.y)*.015;
+      const k = ease(.03);
+      target.x += (idleX-target.x)*k;
+      target.y += (idleY-target.y)*k;
     }
 
     // This is the visual anchor: the "future reactor".
