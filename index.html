@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Electric Core</title>
+<title>FXRL01 // Núcleo Eléctrico</title>
 <style>
   :root{
     --bg:#03080d;
@@ -202,17 +202,11 @@
 <div class="hud">
   <div class="top">
     <div class="brand">
-      <strong>FXRL</strong>
-      <span> </span>
+      <strong>FXRL01</strong>
     </div>
-    <div class="status"><i></i>ACTIVE CORE</div>
+    <div class="status"><i></i> NÚCLEO ACTIVO</div>
   </div>
 
-  <div class="center">
-    <div class="core-label">ELECTRIC CORE</div>
-
-    </div>
-  </div>
 
   <div class="bottom">
     <div class="hint">
@@ -235,7 +229,8 @@
   let frame = 0;
 
   const pointer = { x: 0, y: 0, active: false, lastX: 0, lastY: 0, speed: 0 };
-  const target = { x: 0, y: 0 };
+  const target = { x: 0, y: 0, vx: 0, vy: 0 };
+  let beat = 0, excite = 0;
 
   const TAU = Math.PI * 2;
   const TWO = Math.PI * 0.5;
@@ -263,21 +258,23 @@
     }
 
     update(time) {
-      const breathing = 1 + Math.sin(time * .0016 + this.phase) * .045;
-      const baseR = 46 * breathing;
+      const breathing = 1 + Math.sin(time * .0016 + this.phase) * .045 + beat * .10;
+      const baseR = 30 * breathing;
+      const ba = this.baseAngle + time * .00005;   // slow living swirl
 
-      let anchorX = cx + Math.cos(this.baseAngle) * baseR;
-      let anchorY = cy + Math.sin(this.baseAngle) * baseR;
+      // The whole network is anchored to the moving core.
+      let anchorX = target.x + Math.cos(ba) * baseR;
+      let anchorY = target.y + Math.sin(ba) * baseR;
 
-      // Cursor influence becomes stronger nearby.
+      // The network leans toward the cursor while the core catches up.
+      const lag = pointer.active ? Math.hypot(pointer.x - target.x, pointer.y - target.y) : 0;
+      const lagF = Math.min(1, lag / 90);
       const dx = pointer.x - anchorX;
       const dy = pointer.y - anchorY;
       const dist = Math.hypot(dx,dy);
-      const influence = pointer.active
-        ? Math.max(0, 1 - dist / Math.max(170, Math.min(w,h)*.33))
-        : 0;
+      const influence = pointer.active ? Math.min(1, lag / 140) : 0;
 
-      const aim = Math.atan2(dy, dx);
+      const aim = Math.atan2(pointer.y - target.y, pointer.x - target.x);
       const offset = Math.sin(time * this.speed + this.phase) * 0.16
                    + influence * Math.sin(time*.007 + this.phase) * 0.26;
 
@@ -287,7 +284,7 @@
         const wave = Math.sin(p * 7 + this.phase + time*.0022) * (7 + 18*p) * this.bend;
         const wave2 = Math.cos(p * 11 - this.phase + time*.0014) * 4 * p;
 
-        let ang = this.baseAngle + offset + Math.sin(p*2.4 + this.phase)*0.12;
+        let ang = ba + offset + Math.sin(p*2.4 + this.phase)*0.12;
 
         // Curve toward the active energy source.
         ang += Math.sin(aim - ang) * influence * (0.30 + p*.45);
@@ -299,12 +296,17 @@
         x += Math.cos(ang + Math.PI/2) * (wave + wave2) * p;
         y += Math.sin(ang + Math.PI/2) * (wave + wave2) * p;
 
+        // Motion drag: tips trail behind the core like living tissue.
+        const drag = p * p * 5;
+        x -= Math.max(-150, Math.min(150, target.vx * drag));
+        y -= Math.max(-150, Math.min(150, target.vy * drag));
+
         // Near the cursor, create a subtle repulsion sheath.
-        if(pointer.active && dist < 260) {
+        if(pointer.active && dist < 260 && lagF > 0) {
           const pdx = x - pointer.x;
           const pdy = y - pointer.y;
           const pd = Math.hypot(pdx,pdy) || 1;
-          const push = Math.max(0, 1 - pd/260) * 16 * (0.4 + p);
+          const push = Math.max(0, 1 - pd/260) * 16 * (0.4 + p) * lagF;
           x += pdx/pd * push;
           y += pdy/pd * push;
         }
@@ -462,27 +464,97 @@
     if(t) updatePointer(t.clientX,t.clientY);
   }, {passive:true});
 
-  function drawCore(time) {
-    const idleX=cx+Math.cos(time*.00033)*Math.min(w,h)*.06;
-    const idleY=cy+Math.sin(time*.00051)*Math.min(w,h)*.045;
+  function updateCore(time) {
+    const idleX=cx+Math.cos(time*.00045)*Math.min(w,h)*.11;
+    const idleY=cy+Math.sin(time*.00068)*Math.min(w,h)*.08;
 
-    // Frame-rate independent easing (values are the fraction covered per 60fps frame).
-    const dt = Math.min(48, time - (drawCore.last || time)) || 16.667;
-    drawCore.last = time;
-    const ease = f => 1 - Math.pow(1 - f, dt / 16.667);
+    const dt = Math.min(48, time - (updateCore.last || time)) || 16.667;
+    updateCore.last = time;
+    const f60 = dt / 16.667;
+    const ease = f => 1 - Math.pow(1 - f, f60);
+
+    const px = target.x, py = target.y;
     if(pointer.active){
-      const k = ease(.28);            // was .065 -> much snappier tracking
+      const k = ease(.28);
       target.x += (pointer.x-target.x)*k;
       target.y += (pointer.y-target.y)*k;
     } else {
-      const k = ease(.03);
+      const k = ease(.04);
       target.x += (idleX-target.x)*k;
       target.y += (idleY-target.y)*k;
     }
 
-    // This is the visual anchor: the "future reactor".
-    const breathe=1+Math.sin(time*.004)*.06;
-    const radius=24*breathe;
+    // Smoothed velocity (px per 60fps frame) drives the trailing tissue.
+    const kv = ease(.22);
+    target.vx += ((target.x-px)/f60 - target.vx) * kv;
+    target.vy += ((target.y-py)/f60 - target.vy) * kv;
+
+    // Excitement: the core glows harder the faster you move.
+    const move = Math.min(1, Math.hypot(target.vx, target.vy) / 16);
+    excite += (Math.max(move, pointer.active ? .14 : .06) - excite) * ease(.08);
+
+    // Heartbeat (lub-dub).
+    const ph = time * .0042;
+    beat = Math.pow(Math.max(0, Math.sin(ph)), 8) + .55 * Math.pow(Math.max(0, Math.sin(ph - 1.1)), 8);
+  }
+
+  // Illumination + living body drawn BEHIND the filaments (fills the old dark hole).
+  function drawBody(time) {
+    const x = target.x, y = target.y;
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+
+    const amb = Math.min(w,h) * .62;
+    let g = ctx.createRadialGradient(x,y,0,x,y,amb);
+    g.addColorStop(0, `rgba(0,190,255,${.11 + excite*.12 + beat*.05})`);
+    g.addColorStop(.35, "rgba(0,120,220,.045)");
+    g.addColorStop(1, "rgba(0,60,140,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(x-amb, y-amb, amb*2, amb*2);
+
+    const R = 70 + beat*12 + excite*14;
+    g = ctx.createRadialGradient(x,y,0,x,y,R);
+    g.addColorStop(0, "rgba(190,255,255,.60)");
+    g.addColorStop(.30, "rgba(0,229,255,.34)");
+    g.addColorStop(.68, "rgba(0,110,220,.16)");
+    g.addColorStop(1, "rgba(0,60,180,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(x-R, y-R, R*2, R*2);
+
+    // Swirling plasma wisps.
+    for(let i=0;i<8;i++){
+      const dir = i % 2 ? -1 : 1;
+      const a0 = time*(.0007 + i*.00025)*dir + i*1.7;
+      const r = 13 + i*6 + Math.sin(time*.002 + i)*3 + beat*4;
+      ctx.beginPath();
+      ctx.arc(x, y, r, a0, a0 + 1.0 + Math.sin(time*.0015 + i)*.5);
+      ctx.strokeStyle = `hsla(${185+i*7},100%,${66+i*2}%,${.30 + excite*.30})`;
+      ctx.lineWidth = 1 + (i%3)*.55;
+      ctx.stroke();
+    }
+
+    // Orbiting electrons with short tails.
+    for(let j=0;j<10;j++){
+      const a = time*(.0019 + j*.00021)*(j%2?-1:1) + j*TAU/10;
+      const r = 26 + (j%3)*11 + Math.sin(time*.003 + j)*3 + beat*3;
+      const ex = x + Math.cos(a)*r, ey = y + Math.sin(a)*r*.85;
+      const tx = x + Math.cos(a-.28)*r, ty = y + Math.sin(a-.28)*r*.85;
+      ctx.beginPath();
+      ctx.moveTo(tx,ty); ctx.lineTo(ex,ey);
+      ctx.strokeStyle = "rgba(170,250,255,.35)";
+      ctx.lineWidth = .8;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(ex, ey, 1.3 + (j%2)*.5, 0, TAU);
+      ctx.fillStyle = "rgba(230,255,255,.9)";
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawCore(time) {
+    const breathe = 1 + beat*.14 + Math.sin(time*.004)*.04;
+    const radius = 24*breathe;
 
     // outer rings
     for(let i=0;i<4;i++){
@@ -593,6 +665,8 @@
     drawParticles(time);
 
     // Sort visually: distant filaments first.
+    updateCore(time);
+    drawBody(time);
     for(const f of filaments) f.update(time);
     for(const f of filaments) f.draw(time);
 
