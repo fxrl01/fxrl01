@@ -1,144 +1,134 @@
 <div align="center">
 
-<img src="assets/core-follow.gif" width="100%" alt="FXRL01 Electric Core" />
+<!-- Fondo dinámico: banner con ondas animadas y degradado cian → violeta → azul -->
+<img src="https://capsule-render.vercel.app/api?type=waving&height=240&section=header&text=FXRL01&fontSize=72&fontColor=ffffff&fontAlignY=38&desc=Sistemas%20%C2%B7%20Ciberseguridad%20%C2%B7%20Software%20%C2%B7%20Rob%C3%B3tica&descAlignY=60&descSize=18&animation=twinkling&color=0:00e5ff,50:7c3aed,100:0ea5e9" width="100%" alt="FXRL01" />
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=18&duration=2800&pause=1100&color=00E5FF&center=true&vCenter=true&width=640&lines=curious+about+how+things+work;building%2C+breaking%2C+learning;software+%C3%97+security+%C3%97+systems" alt="typing" />
+<!-- Letras dinámicas: texto que se escribe solo -->
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=2800&pause=1000&color=00E5FF&center=true&vCenter=true&width=720&lines=Curioso+por+entender+c%C3%B3mo+funcionan+las+cosas;Construyendo%2C+rompiendo+y+aprendiendo;Software+%C3%97+seguridad+%C3%97+sistemas;Apasionado+por+la+tecnolog%C3%ADa" alt="Texto animado" />
+
+<br><br>
+
+<img src="assets/core-follow.gif" width="88%" alt="Núcleo eléctrico de FXRL01 siguiendo el cursor" />
 
 <br><br>
 
 <a href="https://fxrl01.github.io/fxrl01/">
-<img src="https://img.shields.io/badge/%E2%9A%A1%20ENTER%20THE%20CORE-00e5ff?style=for-the-badge&labelColor=03080d&color=00e5ff" alt="Enter the interactive core" />
+<img src="https://img.shields.io/badge/%E2%9A%A1%20ENTRAR%20AL%20N%C3%9ACLEO%20INTERACTIVO-00e5ff?style=for-the-badge&labelColor=03080d&color=00e5ff" alt="Entrar al núcleo interactivo" />
 </a>
-
-</div>
-
----
-
-<div align="center">
-
-`ONLINE`&nbsp;&nbsp;&nbsp;`BUILDING`&nbsp;&nbsp;&nbsp;`LEARNING`
 
 </div>
 
 <br>
 
+<img src="https://capsule-render.vercel.app/api?type=rect&height=54&section=header&text=SOBRE%20M%C3%8D&fontSize=24&fontColor=ffffff&color=0:00e5ff,100:7c3aed&animation=fadeIn" width="100%" alt="Sobre mí" />
+
+<div align="center">
+
+Me gusta entender cómo funcionan las cosas por dentro: el código, las redes y los sistemas que sostienen todo en silencio.
+Casi todo lo que hay aquí es lo que construyo, lo que rompo a propósito y lo que aprendo metiendo las manos.
+
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=15&duration=3200&pause=1200&color=8BEFFF&center=true&vCenter=true&width=620&lines=Aprendiz+constante;Curiosidad+antes+que+t%C3%ADtulos;Un+proyecto+a+la+vez" alt="Lema animado" />
+
+</div>
+
+<br>
+
+<img src="https://capsule-render.vercel.app/api?type=rect&height=54&section=header&text=LO%20QUE%20ME%20APASIONA&fontSize=24&fontColor=ffffff&color=0:7c3aed,100:0ea5e9&animation=fadeIn" width="100%" alt="Lo que me apasiona" />
+
 <table align="center">
 <tr>
 
-<td align="center" width="33%">
+<td align="center" width="33%" valign="top">
 
-### `SOFTWARE`
+### 💻 Software
 
-Backend · APIs
+`Python` `C#` `JavaScript`
 
-</td>
-
-<td align="center" width="33%">
-
-### `CYBER`
-
-Networks · Linux
+Backend, APIs pequeñas y bases de datos. Aprendiendo sobre la marcha.
 
 </td>
 
-<td align="center" width="33%">
+<td align="center" width="33%" valign="top">
 
-### `IoT / ROBOTICS`
+### 🛡️ Ciberseguridad
 
-ESP32 · Arduino
+`Linux` `Redes` `Fundamentos`
+
+Etapa inicial: laboratorios, práctica tipo CTF y mucha lectura.
+
+</td>
+
+<td align="center" width="33%" valign="top">
+
+### 🤖 IoT y Robótica
+
+`ESP32` `Arduino` `C/C++`
+
+Mezclar hardware y software, sobre todo para ver cómo las cosas se mueven.
 
 </td>
 
 </tr>
 </table>
 
----
-
-I like figuring out how things work underneath — code, networks, the systems that quietly hold everything together. Most of what's here is me building, breaking things on purpose, and learning by putting my hands in.
-
-<details>
-<summary><strong>Software</strong></summary>
 <br>
 
-`Python` `C#` `JavaScript`
+<img src="https://capsule-render.vercel.app/api?type=rect&height=54&section=header&text=DESTACADOS&fontSize=24&fontColor=ffffff&color=0:0ea5e9,100:00e5ff&animation=fadeIn" width="100%" alt="Destacados" />
 
-Backend basics, small APIs, databases — still learning as I go.
-
-</details>
-
-<details>
-<summary><strong>Cybersecurity</strong></summary>
-<br>
-
-`Linux` `Networking` `Security fundamentals`
-
-Early stage — labs, CTF-style practice, reading a lot.
-
-</details>
-
-<details>
-<summary><strong>IoT / Robotics</strong></summary>
-<br>
-
-`ESP32` `Arduino` `Embedded C/C++`
-
-Mixing hardware and software, mostly to see things move.
-
-</details>
-
----
-
-<!-- 👉 Si estos son proyectos reales tuyos, dejalos y ajustá el link. Si no, borrá esta sección o reemplazala. -->
-<div align="center">
-
-### Featured
-
-</div>
-
+<!-- 👉 Si son proyectos reales tuyos, ajusta el enlace de cada "Ver". Si no, bórralos o cámbialos por los tuyos. -->
 <table>
 <tr>
 
 <td width="50%" valign="top">
 
-**EnterpriseSimuler**
-Small business-simulation project
-`C#` · `.NET` · `SQLite`
-[View →](https://github.com/fxrl01)
+**🏢 EnterpriseSimuler**
+
+Proyecto de simulación de negocios
+`C#` `.NET` `SQLite`
+
+[Ver proyecto →](https://github.com/fxrl01)
 
 </td>
 
 <td width="50%" valign="top">
 
-**IoT / Robotics Lab**
-Software × hardware experiments
-`ESP32` · `Arduino`
-[View →](https://github.com/fxrl01)
+**🔬 Laboratorio IoT / Robótica**
+
+Experimentos de software × hardware
+`ESP32` `Arduino`
+
+[Ver proyectos →](https://github.com/fxrl01)
 
 </td>
 
 </tr>
 </table>
 
----
+<br>
 
-**Currently**
-
-Building `software` · `small systems` · `IoT experiments`
-Learning `cybersecurity` · `networking` · `linux`
-
----
+<img src="https://capsule-render.vercel.app/api?type=rect&height=54&section=header&text=AHORA%20MISMO&fontSize=24&fontColor=ffffff&color=0:00e5ff,100:7c3aed&animation=fadeIn" width="100%" alt="Ahora mismo" />
 
 <div align="center">
 
-<!-- 👉 Reemplazá cada "#" por tu link real (LinkedIn, X, Discord, mailto:tuemail@...) -->
+**Construyendo** `software` · `sistemas pequeños` · `experimentos IoT`
+
+**Aprendiendo** `ciberseguridad` · `redes` · `linux`
+
+</div>
+
+<br>
+
+<img src="https://capsule-render.vercel.app/api?type=rect&height=54&section=header&text=CONECTEMOS&fontSize=24&fontColor=ffffff&color=0:7c3aed,100:00e5ff&animation=fadeIn" width="100%" alt="Conectemos" />
+
+<div align="center">
+
+<!-- 👉 Reemplaza cada "#" por tu enlace real (LinkedIn, X, Discord, mailto:tucorreo@...) -->
 
 <a href="#"><img src="https://img.shields.io/badge/LINKEDIN-03080d?style=for-the-badge&logo=linkedin&logoColor=00e5ff" alt="LinkedIn" /></a>
 <a href="#"><img src="https://img.shields.io/badge/X-03080d?style=for-the-badge&logo=x&logoColor=00e5ff" alt="X" /></a>
 <a href="#"><img src="https://img.shields.io/badge/DISCORD-03080d?style=for-the-badge&logo=discord&logoColor=00e5ff" alt="Discord" /></a>
-<a href="#"><img src="https://img.shields.io/badge/EMAIL-03080d?style=for-the-badge&logo=gmail&logoColor=00e5ff" alt="Email" /></a>
-
-<br><br>
-
-`FXRL01 // SYSTEM ONLINE`
+<a href="#"><img src="https://img.shields.io/badge/CORREO-03080d?style=for-the-badge&logo=gmail&logoColor=00e5ff" alt="Correo" /></a>
 
 </div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&height=110&section=footer&color=0:0ea5e9,50:7c3aed,100:00e5ff&animation=twinkling" width="100%" alt="" />
