@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>FXRL01 // Electric Core</title>
+<title>FXRL01 // Núcleo Eléctrico</title>
 <style>
   :root{
     --bg:#03080d;
@@ -203,28 +203,24 @@
   <div class="top">
     <div class="brand">
       <strong>FXRL01</strong>
-      <span>systems // cyber // software // robotics</span>
+      <span> </span>
     </div>
-    <div class="status"><i></i> CORE ONLINE</div>
+    <div class="status"><i></i>ACTIVE CORE</div>
   </div>
 
   <div class="center">
     <div class="core-label">ELECTRIC CORE</div>
-    <div class="core-sub">BUILD · LEARN · SECURE · EVOLVE</div>
+    <div class="core-sub"> </div>
     <div class="focus">
-      <div class="chip">SOFTWARE</div>
-      <div class="chip">CYBERSECURITY</div>
-      <div class="chip">SYSTEMS</div>
-      <div class="chip">IoT / ROBOTICS</div>
     </div>
   </div>
 
   <div class="bottom">
     <div class="hint">
-      <b>INTERACTION //</b><br>
-      Move through the field. The core follows your presence and the network responds.
+      <b>INTERACCIÓN //</b><br>
+      Mueve el cursor por el campo. El núcleo te sigue y la red responde.
     </div>
-    <div class="coords" id="coords">X: ---- &nbsp; Y: ----<br>FIELD: STANDBY</div>
+    <div class="coords" id="coords">X: ---- &nbsp; Y: ----<br>CAMPO: EN ESPERA</div>
   </div>
 </div>
 
@@ -610,9 +606,9 @@
 
     const coords=document.getElementById("coords");
     if(pointer.active){
-      coords.innerHTML=`X: ${Math.round(pointer.x).toString().padStart(4,"0")} &nbsp; Y: ${Math.round(pointer.y).toString().padStart(4,"0")}<br>FIELD: ACTIVE`;
+      coords.innerHTML=`X: ${Math.round(pointer.x).toString().padStart(4,"0")} &nbsp; Y: ${Math.round(pointer.y).toString().padStart(4,"0")}<br>CAMPO: ACTIVO`;
     }else{
-      coords.innerHTML=`X: ---- &nbsp; Y: ----<br>FIELD: AUTONOMOUS`;
+      coords.innerHTML=`X: ---- &nbsp; Y: ----<br>CAMPO: AUTÓNOMO`;
     }
 
     requestAnimationFrame(render);
