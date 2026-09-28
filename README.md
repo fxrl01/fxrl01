@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/core-glow.svg" width="100%" alt="FXRL01 — systems, cybersecurity, software" />
+<img src="assets/core-follow.gif" width="100%" alt="FXRL01 Electric Core" />
 
 <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=18&duration=2800&pause=1100&color=00E5FF&center=true&vCenter=true&width=640&lines=curious+about+how+things+work;building%2C+breaking%2C+learning;software+%C3%97+security+%C3%97+systems" alt="typing" />
 
