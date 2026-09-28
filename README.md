@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- Fondo dinámico: banner con ondas animadas y degradado cian → violeta → azul -->
-<img src="https://capsule-render.vercel.app/api?type=waving&height=240&section=header&text=FXRL01&fontSize=72&fontColor=ffffff&fontAlignY=38&desc=Sistemas%20%C2%B7%20Ciberseguridad%20%C2%B7%20Software%20%C2%B7%20Rob%C3%B3tica&descAlignY=60&descSize=18&animation=twinkling&color=0:00e5ff,50:7c3aed,100:0ea5e9" width="100%" alt="FXRL01" />
+<img src="https://capsule-render.vercel.app/api?type=waving&height=240&section=header&text=FXRL&fontSize=72&fontColor=ffffff&fontAlignY=38&desc=Sys%20%C2%B7%20Ciber%20%C2%B7%20Soft%20%C2%B7%20Robotics&descAlignY=60&descSize=18&animation=twinkling&color=0:00e5ff,50:7c3aed,100:0ea5e9" width="100%" alt="FXRL01" />
 
 
 <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=2600&pause=900&color=00E5FF&center=true&vCenter=true&width=720&height=40&lines=%E2%96%91+%E2%96%92+%E2%96%93+%E2%96%88+%E2%96%91+%E2%96%92+%E2%96%93+%E2%96%88+%E2%96%91+%E2%96%92+%E2%96%93+%E2%96%88+%E2%96%91+%E2%96%92+%E2%96%93+%E2%96%88+%E2%96%91+%E2%96%92+%E2%96%93+%E2%96%88" alt="Cargando" />
