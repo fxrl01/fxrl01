@@ -1,10 +1,8 @@
 <div align="center">
 
 <!-- Fondo dinámico: banner con ondas animadas y degradado cian → violeta → azul -->
-<img src="https://capsule-render.vercel.app/api?type=waving&height=240&section=header&text=FXRL01&fontSize=72&fontColor=ffffff&fontAlignY=38&desc=Sistemas%20%C2%B7%20Ciberseguridad%20%C2%B7%20Software%20%C2%B7%20Rob%C3%B3tica&descAlignY=60&descSize=18&animation=twinkling&color=0:00e5ff,50:7c3aed,100:0ea5e9" width="100%" alt="FXRL01" />
+<img src="https://capsule-render.vercel.app/api?type=waving&height=240&section=header&text=FXRL&fontSize=72&fontColor=ffffff&fontAlignY=38&desc=Sys%20%C2%B7%20Ciber%20%C2%B7%20Software%20%C2%B7%20&descAlignY=60&descSize=18&animation=twinkling&color=0:00e5ff,50:7c3aed,100:0ea5e9" width="100%" alt="FXRL" />
 
-<!-- Letras dinámicas: texto que se escribe solo -->
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=2800&pause=1000&color=00E5FF&center=true&vCenter=true&width=720&lines=Curioso+por+entender+c%C3%B3mo+funcionan+las+cosas;Construyendo%2C+rompiendo+y+aprendiendo;Software+%C3%97+seguridad+%C3%97+sistemas;Apasionado+por+la+tecnolog%C3%ADa" alt="Texto animado" />
 
 <br><br>
 
@@ -25,7 +23,7 @@
 <div align="center">
 
 Me gusta entender cómo funcionan las cosas por dentro: el código, las redes y los sistemas que sostienen todo en silencio.
-Casi todo lo que hay aquí es lo que construyo, lo que rompo a propósito y lo que aprendo metiendo las manos.
+Casi todo lo que hay aquí es lo que construyo y continuo con el aprendizaje.
 
 <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=15&duration=3200&pause=1200&color=8BEFFF&center=true&vCenter=true&width=620&lines=Aprendiz+constante;Curiosidad+antes+que+t%C3%ADtulos;Un+proyecto+a+la+vez" alt="Lema animado" />
 
@@ -50,7 +48,7 @@ Backend, APIs pequeñas y bases de datos. Aprendiendo sobre la marcha.
 
 <td align="center" width="33%" valign="top">
 
-### 🛡️ Ciberseguridad
+### 🛡️ Ciber
 
 `Linux` `Redes` `Fundamentos`
 
@@ -65,39 +63,6 @@ Etapa inicial: laboratorios, práctica tipo CTF y mucha lectura.
 `ESP32` `Arduino` `C/C++`
 
 Mezclar hardware y software, sobre todo para ver cómo las cosas se mueven.
-
-</td>
-
-</tr>
-</table>
-
-<br>
-
-<img src="https://capsule-render.vercel.app/api?type=rect&height=54&section=header&text=DESTACADOS&fontSize=24&fontColor=ffffff&color=0:0ea5e9,100:00e5ff&animation=fadeIn" width="100%" alt="Destacados" />
-
-<!-- 👉 Si son proyectos reales tuyos, ajusta el enlace de cada "Ver". Si no, bórralos o cámbialos por los tuyos. -->
-<table>
-<tr>
-
-<td width="50%" valign="top">
-
-**🏢 EnterpriseSimuler**
-
-Proyecto de simulación de negocios
-`C#` `.NET` `SQLite`
-
-[Ver proyecto →](https://github.com/fxrl01)
-
-</td>
-
-<td width="50%" valign="top">
-
-**🔬 Laboratorio IoT / Robótica**
-
-Experimentos de software × hardware
-`ESP32` `Arduino`
-
-[Ver proyectos →](https://github.com/fxrl01)
 
 </td>
 
