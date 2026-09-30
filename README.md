@@ -50,11 +50,11 @@ Backend, APIs pequeñas y bases de datos. Aprendiendo sobre la marcha.
 
 <td align="center" width="33%" valign="top">
 
-### 🛡️ Ciberseguridad
+### 🛡️ Ciber
 
-`Linux` `Redes` `Fundamentos`
+`Linux` `Network` `Fundamentos`
 
-Etapa inicial: laboratorios, práctica tipo CTF y mucha lectura.
+Etapa inicial: laboratorios, práctica tipo CTF y mucho aprendizaje.
 
 </td>
 
@@ -64,7 +64,7 @@ Etapa inicial: laboratorios, práctica tipo CTF y mucha lectura.
 
 `ESP32` `Arduino` `C/C++`
 
-Mezclar hardware y software, sobre todo para ver cómo las cosas se mueven.
+Mezclar hardware y software, para entender la incertidumbre tecnologica.
 
 </td>
 
@@ -76,9 +76,9 @@ Mezclar hardware y software, sobre todo para ver cómo las cosas se mueven.
 
 <div align="center">
 
-**Construyendo** `software` · `sistemas pequeños` · `experimentos IoT`
+**Construyendo** `software` · `sistemas` · `experimentos IoT`
 
-**Aprendiendo** `ciberseguridad` · `redes` · `linux`
+**Aprendiendo** `Nuevas habilidades` · `liderazgo` · `linux`
 
 </div>
 
